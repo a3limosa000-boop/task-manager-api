@@ -1,0 +1,112 @@
+{
+  "info": {
+    "name": "Task Manager API",
+    "description": "CRUD test collection for the Task Manager API assignment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:5000" },
+    { "key": "task_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries\",\n  \"description\": \"Milk, eggs, bread\"\n}"
+        },
+        "url": { "raw": "{{base_url}}/tasks", "host": ["{{base_url}}"], "path": ["tasks"] }
+      }
+    },
+    {
+      "name": "Create Task - Missing Title (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"description\": \"no title here\"\n}" },
+        "url": { "raw": "{{base_url}}/tasks", "host": ["{{base_url}}"], "path": ["tasks"] }
+      }
+    },
+    {
+      "name": "Get All Tasks",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/tasks", "host": ["{{base_url}}"], "path": ["tasks"] }
+      }
+    },
+    {
+      "name": "Get Task by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/tasks/{{task_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Get Task by ID - Not Found (404)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/tasks/9999", "host": ["{{base_url}}"], "path": ["tasks", "9999"] }
+      }
+    },
+    {
+      "name": "Update Task (PUT - full)",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries and cook dinner\",\n  \"description\": \"Milk, eggs, bread, chicken\",\n  \"status\": \"pending\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/tasks/{{task_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Task (PATCH - partial)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"completed\"\n}" },
+        "url": {
+          "raw": "{{base_url}}/tasks/{{task_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Task - Empty Title (400)",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"\"\n}" },
+        "url": {
+          "raw": "{{base_url}}/tasks/{{task_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/tasks/{{task_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    }
+  ]
+}
